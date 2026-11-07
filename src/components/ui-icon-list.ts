@@ -1,0 +1,25 @@
+import { Home, Truck, Warehouse, Award, BadgePercent, Briefcase, ChevronLeft, Coins, Gem, Gift, Mail, MessageCircle, Newspaper, Plus, Settings, Store, Trophy, Users, Zap, type LucideIcon } from "lucide-react";
+
+export const UI_ICON_LIST: { id: string; label: string; Icon: LucideIcon }[] = [
+  { id: "coin", label: "Монеты", Icon: Coins },
+  { id: "gem", label: "Алмазы", Icon: Gem },
+  { id: "energy", label: "Энергия", Icon: Zap },
+  { id: "mail", label: "Почта", Icon: Mail },
+  { id: "settings", label: "Меню / настройки", Icon: Settings },
+  { id: "friends", label: "Друзья", Icon: Users },
+  { id: "market", label: "Рынок", Icon: Store },
+  { id: "chat", label: "Чат", Icon: MessageCircle },
+  { id: "forum", label: "Форум", Icon: Newspaper },
+  { id: "newspaper", label: "Газета", Icon: BadgePercent },
+  { id: "orders", label: "Заказы", Icon: Briefcase },
+  { id: "rating", label: "Рейтинг", Icon: Trophy },
+  { id: "season", label: "Сезонный пропуск", Icon: Award },
+  { id: "gift", label: "Подарок дня", Icon: Gift },
+  { id: "news", label: "Новости", Icon: Newspaper },
+  { id: "back", label: "Назад", Icon: ChevronLeft },
+  { id: "plus", label: "Плюс", Icon: Plus },
+  { id: "nav:farm", label: "Низ: Ферма", Icon: Home },
+  { id: "nav:estate", label: "Низ: Усадьба", Icon: Warehouse },
+  { id: "nav:orders", label: "Низ: Заказы (большая)", Icon: Truck },
+  { id: "nav:shop", label: "Низ: Магазин", Icon: Store },
+];

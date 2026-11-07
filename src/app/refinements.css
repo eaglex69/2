@@ -1,0 +1,212 @@
+/* Читаемость игрового интерфейса. Админка сохраняет свою компактную типографику. */
+.game-shell .muted,.game-shell .form-hint,.game-shell .timer-line { font-size:13px; line-height:1.5; color:#76613f; }
+.game-shell.inner .module-stack>.muted,.game-shell.inner .module-stack>.form-hint { color:#fff9e7; text-shadow:0 1px 3px #3d321c; }
+.game-shell .btn { font-size:14px; min-height:44px; }
+.game-shell .panel p,.game-shell .water-card p,.game-shell .pen-card p,.game-shell .mine-card p,.game-shell .job-card p,.game-shell .shop-card p,.game-shell .order-card p,.game-shell .coop-card p,.game-shell .worker-card p,.game-shell .news-card p,.game-shell .mail-card p { font-size:13px; line-height:1.5; }
+.game-shell .panel h3,.game-shell .water-card h3,.game-shell .pen-card h3,.game-shell .mine-card h3,.game-shell .job-card h3,.game-shell .shop-card h3,.game-shell .order-card h3,.game-shell .inventory-card h3 { font-size:16px; line-height:1.35; }
+.game-shell .card-title p,.game-shell .selection-copy span,.game-shell .selection-copy small,.game-shell .ingredient-list span,.game-shell .reward-line span,.game-shell .crop-visual p,.game-shell .job-copy p,.game-shell .shop-card-top>span,.game-shell .timer-line strong { font-size:12px; }
+.game-shell .segmented button,.game-shell .filter-scroll button { font-size:13px; min-height:42px; }
+.game-shell .eyebrow { font-size:11px; }
+.game-shell .form-stack label>span,.game-shell .field-label { font-size:13px; }
+.game-shell .chat-message p,.game-shell .chat-text { font-size:15px; line-height:1.5; }
+.game-shell .chat-message strong,.game-shell .chat-message time,.game-shell .chat-presence,.game-shell .topic-meta,.game-shell .author-line { font-size:12px; }
+.game-shell .topic-row h3 { font-size:17px; }
+.game-shell .topic-row>p,.game-shell .reply-card p { font-size:14px; }
+.game-shell .empty-state h3 { font-size:18px; }
+.game-shell .empty-state p { font-size:14px; }
+.game-shell .dock-label { font-size:11px; }
+.game-shell .map-dock-button { flex-basis:78px; width:78px; height:90px; }
+.game-shell .map-pin-label { font-size:12px; }
+.game-shell .map-pin-timer { font-size:11px; }
+.game-shell .map-round-timer { font-size:13px; }
+.game-shell .water-tab small { font-size:12px; }
+.game-shell .bonus-chip { font-size:12px; }
+.game-shell .bonus-chip small { font-size:11px; }
+.game-shell .toast { font-size:14px; }
+.game-shell .fishing-labels { font-size:12px; gap:8px; }
+.game-shell .fishing-labels strong { font-size:13px; }
+.game-shell .bite-label { font-size:15px; }
+.game-shell .resource-value { font-size:25px; }
+@media(max-width:700px) {
+ .game-shell .resource-value,.game-shell .resource-energy .resource-value { font-size:15px; letter-spacing:-.4px; }
+ .game-shell .map-resource { padding-right:4px; }
+ .game-shell .map-dock-button { flex-basis:74px; width:74px; height:86px; }
+ .game-shell .map-dock { padding-bottom:calc(14px + env(safe-area-inset-bottom)); }
+ .game-shell .map-round-timer { font-size:11px; }
+ .game-shell .map-pin-label { font-size:11px; }
+ .game-shell .inner-title strong { font-size:18px; }
+ .game-shell .inner-title small { font-size:12px; }
+ .game-shell .btn { min-height:46px; }
+ .game-shell .chat-presence { flex-wrap:wrap; }
+}
+@media(max-width:380px) { .game-shell .resource-value,.game-shell .resource-energy .resource-value { font-size:14px; } }
+
+/* Рыбалка: явная пауза 2:30, таймер продолжает идти во всех разделах. */
+.fishing-rest { display:flex; align-items:center; gap:18px; padding:8px 4px 16px; }
+.fishing-rest>.farm-art { flex:0 0 96px; }
+.fishing-rest h3 { margin:5px 0 8px; font-size:22px!important; color:#654319; }
+.fishing-rest p { color:#796442; font-size:14px!important; }
+.fishing-countdown { display:grid; grid-template-columns:auto auto 1fr; align-items:center; gap:10px; padding:16px; margin:0 0 16px; border-radius:18px; background:#e8f6fd; border:2px solid #b4dcec; color:#286783; }
+.fishing-countdown>strong { font-size:36px; line-height:1; font-weight:900; font-variant-numeric:tabular-nums; }
+.fishing-countdown>span { font-size:13px; font-weight:800; }
+.fishing-countdown .progress-track { grid-column:1/-1; height:9px; background:#c4e1ed; }
+.fishing-countdown .progress-track>span { background:linear-gradient(90deg,#4cb8e4,#7ed9ee); transition:width .5s linear; }
+@media(max-width:480px) { .fishing-rest { gap:10px; } .fishing-rest>.farm-art { width:72px!important; height:72px!important; flex-basis:72px; } .fishing-rest h3 { font-size:19px!important; } .fishing-countdown { padding:12px; gap:8px; } .fishing-countdown>strong { font-size:32px; } }
+
+/* Рейтинги: место игрока всегда видно, список не прячется за наградами. */
+.game-shell .rating-hero { align-items:center; }
+.game-shell .rating-hero strong { font-size:23px; }
+.game-shell .rating-hero p { font-size:14px; line-height:1.5; }
+.game-shell .rating-timer { font-size:13px; padding:7px 10px; white-space:nowrap; }
+.rating-my-place { padding:16px 20px; border:3px solid #fff; border-radius:22px; background:linear-gradient(130deg,#fffbe0,#ffe7a2); box-shadow:0 0 0 2px #d5a44c,0 5px 0 rgba(126,87,35,.4); color:#674416; }
+.rating-my-place>div { display:flex; align-items:center; gap:16px; margin-top:5px; }
+.rating-my-place strong { font-size:40px; font-weight:900; line-height:1.2; color:#946018; }
+.rating-my-place>div>span { font-size:16px; font-weight:800; }
+.rating-my-place>p { margin-top:7px; font-size:13px; line-height:1.45; }
+.rating-list-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 4px 0; color:#fff9e8; text-shadow:0 1px 3px #3b381b; }
+.rating-list-heading>strong { font-size:16px; }
+.rating-list-heading>button { display:flex; align-items:center; gap:6px; min-height:44px; padding:7px 10px; border:2px solid #fff; border-radius:12px; background:#477b32; color:#fff; font-size:13px; font-weight:800; text-shadow:none; }
+.game-shell .rating-list { display:flex; flex-direction:column; gap:12px; }
+.game-shell .rating-row { display:flex; width:100%; align-items:center; gap:13px; padding:14px 16px; text-align:left; min-height:86px; }
+.game-shell .rating-row.me { box-shadow:0 0 0 3px #4c9c38,0 5px 0 rgba(62,108,31,.45)!important; }
+.game-shell .rating-row>.rank-badge { flex:0 0 38px; width:38px; height:38px; font-size:20px; font-weight:900; }
+.game-shell .rating-row>div { flex:1; min-width:0; }
+.game-shell .rating-row strong { display:block; font-size:17px; line-height:1.35; overflow-wrap:anywhere; color:#53391b; }
+.game-shell .rating-row strong em { display:inline-block; margin-left:7px; padding:1px 7px; border-radius:7px; background:#5b9b3c; color:#fff; font-size:11px; font-style:normal; vertical-align:middle; }
+.game-shell .rating-row small { display:block; margin-top:4px; font-size:13px; line-height:1.35; color:#826c46; }
+.game-shell .rating-row>b { flex:0 0 auto; font-size:21px; font-weight:900; color:#694717; text-align:right; font-variant-numeric:tabular-nums; }
+.game-shell .rating-row>b>small { font-size:11px; font-weight:800; margin-top:1px; }
+.rating-updated { color:#fffbe9!important; text-shadow:0 1px 3px #3d321c; font-size:12px!important; text-align:center; }
+.rating-rewards>summary { display:flex; align-items:center; gap:10px; min-height:44px; cursor:pointer; font-size:16px; font-weight:900; color:#6b481c; }
+.rating-rewards[open]>summary { margin-bottom:12px; }
+.rating-error { display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; padding:30px!important; }
+.rating-error h3 { font-size:21px!important; }
+.rating-error p { font-size:15px!important; }
+@media(max-width:700px) { .game-shell .rating-hero strong { font-size:20px; } .game-shell .rating-row { gap:9px; padding:12px 10px; } .game-shell .rating-row strong { font-size:16px; } .game-shell .rating-row>b { font-size:19px; } .game-shell .rating-row>.rank-badge { flex-basis:32px; width:32px; height:32px; font-size:17px; } .rating-list-heading>strong { font-size:14px; } .rating-my-place { padding:14px; } }
+
+/* Новая растровая мини-игра: никаких эмодзи или SVG в персонажах и инструментах. */
+.defense-picture { display:block; width:56px; height:56px; object-fit:contain; flex:0 0 auto; pointer-events:none; user-select:none; }
+.defense-module { --defense-cream:#fff5d8; }
+.defense-hero { display:flex; align-items:center; gap:16px; padding:20px; border:3px solid #fff; border-radius:24px; background:linear-gradient(135deg,#64ad3e,#2e752c); color:#fff; box-shadow:0 5px 0 #285b24,0 10px 22px #203b2633; }
+.defense-hero>.defense-picture { width:94px; height:108px; filter:drop-shadow(0 4px 3px #183b2544); }
+.defense-hero>div { flex:1; }
+.defense-hero .eyebrow { color:#e5f6c9; }
+.defense-hero h2 { font-size:28px; font-weight:900; margin:5px 0 8px; }
+.defense-hero p { font-size:15px; line-height:1.5; }
+.game-shell .pvz-stats { gap:10px; }
+.game-shell .pvz-stats>div { padding:14px 8px; }
+.game-shell .pvz-stats strong { font-size:26px; }
+.game-shell .pvz-stats span { font-size:12px; line-height:1.4; }
+.defense-guide-heading { margin:20px 0 12px; }
+.defense-guide-heading h3 { font-size:21px!important; }
+.defense-guide-heading p { margin-top:6px; font-size:14px!important; }
+.defense-guide { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding:0; margin:0 0 20px; list-style:none; }
+.defense-guide li { display:flex; align-items:center; gap:10px; padding:12px; border:2px solid #ead5a5; border-radius:17px; background:#fffdf1; min-width:0; }
+.defense-guide .defense-picture { width:64px; height:72px; }
+.defense-guide strong { display:block; font-size:14px; color:#5c411d; }
+.defense-guide small { display:block; font-size:12px; line-height:1.4; color:#85704c; margin-top:3px; }
+.defense-guide-cost { display:flex; align-items:center; gap:4px; font-size:14px; font-weight:900; color:#805517; margin-top:4px; }
+.defense-guide-cost .defense-picture { width:21px; height:21px; }
+.game-shell .defense-start { display:flex; justify-content:center; gap:10px; font-size:17px; min-height:56px; }
+.defense-start .defense-picture { width:32px; height:32px; }
+@media(max-width:900px) { .defense-guide { grid-template-columns:repeat(2,minmax(0,1fr)); } .defense-hero>.defense-picture { width:74px; height:90px; } .defense-hero h2 { font-size:24px; } }
+@media(max-width:700px) {
+ .defense-hero { padding:14px 10px; gap:7px; }
+ .defense-hero>.defense-picture { width:58px; height:78px; }
+ .defense-hero h2 { font-size:21px; }
+ .defense-hero p { font-size:13px; }
+ .defense-guide { gap:8px; }
+ .defense-guide li { padding:9px 6px; gap:5px; }
+ .defense-guide .defense-picture { width:48px; height:58px; }
+ .defense-guide strong { font-size:13px; }
+ .defense-guide small { font-size:12px; }
+}
+
+
+/* ============ Полноэкранный бой: панель семян сверху и большой газон ============ */
+.defense-play { position:fixed; z-index:600; inset:0; display:flex; flex-direction:column; background:#2f4f1c; color:#fff8df; overscroll-behavior:none; }
+.defense-seedbar { flex:0 0 auto; display:flex; align-items:stretch; gap:8px; padding:max(8px,env(safe-area-inset-top)) 10px 8px; background:linear-gradient(180deg,#8a5a2b,#6a4120); border-bottom:4px solid #3e2610; box-shadow:0 4px 12px #0006; }
+.defense-sunbox { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; width:82px; padding:3px 4px; border:3px solid #c79a55; border-radius:12px; background:linear-gradient(180deg,#4a2f17,#2f1d0d); box-shadow:inset 0 2px 4px #0008; }
+.defense-sunbox .defense-picture { width:46px; height:46px; filter:drop-shadow(0 0 8px #ffd54a); }
+.defense-sunbox strong { margin-top:-2px; padding:0 8px; border-radius:7px; background:#f6efd2; color:#3d2a12; font-size:20px; font-weight:900; font-variant-numeric:tabular-nums; }
+.defense-packets { flex:1; min-width:0; display:flex; gap:6px; overflow-x:auto; overscroll-behavior-x:contain; padding:2px 2px 4px; scrollbar-width:thin; scrollbar-color:#e7c17b #5a3818; }
+.seed-packet { position:relative; flex:0 0 74px; width:74px; height:96px; display:flex; flex-direction:column; align-items:center; padding:4px 4px 3px; border:2px solid #5a3a17; border-radius:8px; background:linear-gradient(180deg,#f1e2b4,#d5bd82); box-shadow:0 3px 0 #3a250f; color:#3b2810; overflow:hidden; transition:transform .12s; }
+.seed-window { width:62px; height:64px; display:grid; place-items:center; border-radius:5px; background:linear-gradient(180deg,#bfe08e,#86b957); box-shadow:inset 0 2px 3px #4b6d2a88; }
+.seed-window .defense-picture { width:58px; height:60px; filter:drop-shadow(0 2px 1px #2f4d1866); }
+.seed-cost { display:flex; align-items:center; gap:2px; margin-top:3px; font-size:16px; font-weight:900; line-height:1; }
+.seed-cost .defense-picture { width:17px; height:17px; }
+.seed-packet.shovel .seed-cost { font-size:12px; }
+.seed-packet.selected { border-color:#fff16e; box-shadow:0 0 0 3px #ffbf1f,0 3px 0 #3a250f; transform:translateY(-3px); background:linear-gradient(180deg,#fff6cf,#f0d58c); }
+.seed-packet.unavailable .seed-window .defense-picture { filter:grayscale(.75) brightness(.85); }
+.seed-packet.unavailable .seed-cost { color:#9b2d1a; }
+.seed-cool { position:absolute; left:0; right:0; top:0; background:#1d1f1ad1; pointer-events:none; transition:height .1s linear; }
+.defense-icon-button { flex:0 0 auto; align-self:center; width:56px; height:56px; padding:2px; border:0; background:none; border-radius:14px; }
+.defense-icon-button .defense-picture { width:52px; height:52px; }
+.defense-field { position:relative; flex:1; min-height:0; overflow:hidden; background:radial-gradient(circle at 50% 30%,#4a7a2a,#25401a); }
+.defense-viewport { position:absolute; inset:0; overflow:hidden; touch-action:none; cursor:grab; outline:none; user-select:none; -webkit-user-select:none; }
+.defense-viewport:active { cursor:grabbing; }
+.defense-viewport:focus-visible { box-shadow:inset 0 0 0 4px #fff59a; }
+.defense-stage { display:grid; place-items:center; min-width:100%; min-height:100%; width:max-content; height:max-content; }
+.defense-canvas { display:block; max-width:none; box-shadow:0 0 0 4px #3e6421,0 10px 30px #0007; }
+.defense-selected-chip { position:absolute; left:10px; top:10px; z-index:2; display:flex; align-items:center; gap:8px; padding:5px 12px 5px 5px; border:2px solid #fff3c4; border-radius:14px; background:#3b2814e6; pointer-events:none; }
+.defense-selected-chip .defense-picture { width:40px; height:42px; }
+.defense-selected-chip strong { display:block; font-size:14px; }
+.defense-selected-chip small { display:block; font-size:12px; color:#ffe0a2; }
+.defense-notice { position:absolute; left:50%; top:12px; z-index:3; transform:translateX(-50%); max-width:min(90%,520px); padding:9px 16px; border:2px solid #fff3c4; border-radius:14px; background:#2d4a1ce8; font-size:15px; font-weight:800; text-align:center; pointer-events:none; animation:defense-pop .25s ease-out; }
+.defense-threat-banner { position:absolute; right:10px; top:62px; z-index:3; max-width:min(78%,360px); padding:8px 12px; border:2px solid #fff; border-radius:12px; background:#c8261ae8; font-size:13px; font-weight:900; text-align:center; pointer-events:none; animation:defense-blink 1s ease-in-out infinite; }
+.defense-minimap { position:absolute; left:10px; bottom:12px; z-index:3; width:168px; height:112px; border:3px solid #fff3c4; border-radius:10px; background:#3a5e20; box-shadow:0 4px 12px #0007; cursor:pointer; touch-action:none; }
+.defense-minimap.hidden { display:none; }
+.defense-wave-meter { position:absolute; left:50%; bottom:14px; z-index:3; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:4px; padding:6px 12px; border:2px solid #fff3c4; border-radius:12px; background:#3b2814e6; font-size:14px; font-weight:900; pointer-events:none; }
+.defense-wave-meter i { display:block; width:150px; height:9px; border-radius:5px; background:#5a4428; overflow:hidden; }
+.defense-wave-meter b { display:block; height:100%; background:linear-gradient(90deg,#9be36a,#e2402b); transition:width .3s; }
+.defense-zoom { position:absolute; right:10px; bottom:12px; z-index:3; display:flex; align-items:center; gap:4px; padding:5px; border:2px solid #fff3c4; border-radius:16px; background:#3b2814e6; }
+.defense-zoom button { width:48px; height:48px; display:grid; place-items:center; padding:0; border:2px solid #fff; border-radius:12px; background:radial-gradient(circle at 35% 28%,#75d2ff,#1689df 72%); color:#fff; font-size:28px; font-weight:900; line-height:1; box-shadow:0 3px 0 #0d5e9e; }
+.defense-zoom button:active { transform:translateY(2px); box-shadow:none; }
+.defense-zoom button.fit { background:none; border:0; box-shadow:none; }
+.defense-zoom button.fit .defense-picture { width:48px; height:48px; }
+.defense-zoom span { min-width:52px; text-align:center; font-size:14px; font-weight:900; font-variant-numeric:tabular-nums; }
+.defense-pause-overlay { position:absolute; z-index:10; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; background:#1c2b14d9; backdrop-filter:blur(4px); text-align:center; }
+.defense-pause-overlay>.defense-picture { width:90px; height:90px; }
+.defense-pause-overlay h3 { font-size:30px; font-weight:900; }
+.defense-pause-overlay p { max-width:380px; font-size:16px; line-height:1.5; }
+.defense-pause-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+.defense-pause-actions .btn { display:flex; gap:8px; align-items:center; min-width:180px; }
+.defense-pause-actions .btn .defense-picture { width:28px; height:28px; }
+.defense-controls-help { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+.defense-controls-help>div { padding:12px 14px; border-radius:14px; background:#eef8e1; border:2px solid #cfe7b3; }
+.defense-controls-help strong { display:block; font-size:15px; color:#3d6a22; }
+.defense-controls-help span { display:block; margin-top:4px; font-size:13px; line-height:1.45; color:#4f6a3c; }
+@keyframes defense-pop { from { transform:translate(-50%,-6px); opacity:0; } to { transform:translateX(-50%); opacity:1; } }
+@keyframes defense-blink { 50% { opacity:.65; } }
+@media(max-width:700px) {
+ .defense-seedbar { gap:5px; padding:max(6px,env(safe-area-inset-top)) 6px 6px; }
+ .defense-sunbox { width:64px; }
+ .defense-sunbox .defense-picture { width:36px; height:36px; }
+ .defense-sunbox strong { font-size:16px; padding:0 5px; }
+ .seed-packet { flex-basis:62px; width:62px; height:84px; padding:3px 3px 2px; }
+ .seed-window { width:52px; height:54px; }
+ .seed-window .defense-picture { width:48px; height:50px; }
+ .seed-cost { font-size:14px; }
+ .defense-icon-button { width:46px; height:46px; }
+ .defense-icon-button .defense-picture { width:44px; height:44px; }
+ .defense-selected-chip { top:8px; left:8px; padding:3px 8px 3px 3px; }
+ .defense-selected-chip .defense-picture { width:32px; height:34px; }
+ .defense-selected-chip small { display:none; }
+ .defense-notice { top:56px; font-size:13px; padding:7px 12px; }
+ .defense-threat-banner { top:8px; right:8px; max-width:52%; font-size:12px; padding:6px 8px; }
+ .defense-minimap { width:126px; height:84px; left:8px; bottom:76px; }
+ .defense-wave-meter { left:8px; bottom:10px; transform:none; padding:5px 8px; font-size:12px; }
+ .defense-wave-meter i { width:106px; }
+ .defense-zoom { right:8px; bottom:10px; padding:4px; }
+ .defense-zoom button, .defense-zoom button.fit .defense-picture { width:44px; height:44px; }
+ .defense-zoom span { min-width:44px; font-size:12px; }
+ .defense-controls-help { grid-template-columns:1fr; }
+}
+@media(max-height:520px) and (orientation:landscape) {
+ .defense-seedbar { padding-top:max(4px,env(safe-area-inset-top)); padding-bottom:4px; }
+ .seed-packet { height:70px; flex-basis:56px; width:56px; }
+ .seed-window { width:46px; height:44px; }
+ .seed-window .defense-picture { width:42px; height:42px; }
+ .defense-minimap { bottom:62px; width:105px; height:70px; }
+}
+@media(prefers-reduced-motion:reduce) { .defense-notice, .defense-threat-banner { animation:none; } .seed-packet, .seed-cool, .defense-wave-meter b { transition:none; } }

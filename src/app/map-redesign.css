@@ -1,0 +1,473 @@
+/* Полноэкранная карта в стиле референса. Загружается после globals.css. */
+:root {
+  --hud-cream: #fff8df;
+  --hud-edge: #c99a52;
+  --hud-ink: #6b4518;
+}
+
+body:has(.game-shell) { padding: 0 !important; }
+body:has(.game-shell.on-map) { background: #79b943; }
+.game-shell.on-map, .game-shell:not(.on-map) { border: 0; border-radius: 0; box-shadow: none; }
+.game-shell.on-map { width: 100%; max-width: none; min-height: 100dvh; margin: 0; background: #79b943; }
+.game-shell.on-map .module-content { width: 100%; max-width: none; min-height: 100dvh; margin: 0; padding: 0 !important; background: none !important; }
+.farm-map-redesign { position: relative; width: 100%; height: 100dvh; min-height: 560px; overflow: hidden; isolation: isolate; user-select: none; }
+.farm-map-redesign .farm-map-bg { position: absolute; inset: 0; z-index: 0; background-image: var(--map-image, url("/images/farm-valley-wide.jpg")); background-size: cover; background-position: center; background-repeat: no-repeat; animation: none; transform: none; }
+.farm-map-redesign .farm-canvas { z-index: 0; }
+.map-vignette { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(25, 65, 15, .14), transparent 18%, transparent 72%, rgba(30, 65, 15, .3)); }
+.farm-art { display: block; flex: 0 0 auto; pointer-events: none; user-select: none; filter: drop-shadow(0 2px 2px rgba(74, 45, 12, .18)); }
+.avatar-photo { overflow: hidden; background: #bfe8ff; }
+.avatar-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Верхний HUD */
+.map-top-hud { position: absolute; z-index: 7; top: max(16px, env(safe-area-inset-top)); left: 24px; right: 24px; height: 112px; display: flex; align-items: flex-start; justify-content: space-between; pointer-events: none; }
+.map-top-hud > * { pointer-events: auto; }
+.map-player { position: relative; flex: 0 0 auto; width: 108px; height: 108px; padding: 0; border: 0; background: none; }
+.map-player-ring { display: block; width: 100%; height: 100%; padding: 6px; border-radius: 50%; border: 4px solid #f3ffe7; background: conic-gradient(#ffb429 var(--xp-progress, 0%), #526d73 0); box-shadow: 0 4px 0 rgba(57, 78, 43, .5), 0 8px 18px rgba(0, 0, 0, .25); }
+.map-player-ring .avatar { width: 100% !important; height: 100% !important; border: 0; border-radius: 50%; box-shadow: none; }
+.map-player-level { position: absolute; left: -2px; bottom: -2px; min-width: 36px; height: 36px; padding: 0 5px; display: grid; place-items: center; border-radius: 50%; border: 3px solid #fff; background: #3f4a43; color: #fff; font-size: 20px; font-weight: 900; line-height: 1; box-shadow: 0 2px 0 rgba(0, 0, 0, .3); }
+.map-player-name { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 7px; max-width: 150px; padding: 3px 10px; border-radius: 10px; background: rgba(43, 64, 31, .78); color: #fff; font-size: 12px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity .15s; }
+.map-player:hover .map-player-name, .map-player:focus-visible .map-player-name { opacity: 1; }
+.map-resources { position: absolute; left: 50%; top: 5px; transform: translateX(-46%); display: flex; gap: 22px; }
+.map-resource { position: relative; display: flex; align-items: center; height: 48px; min-width: 154px; padding: 0 22px 0 52px; border-radius: 999px; border: 2px solid rgba(255, 255, 255, .4); background: linear-gradient(180deg, rgba(70, 58, 40, .94), rgba(38, 31, 23, .96)); box-shadow: inset 0 2px 3px rgba(255, 255, 255, .18), 0 4px 0 rgba(57, 42, 18, .38), 0 6px 12px rgba(0, 0, 0, .22); }
+.resource-energy { min-width: 194px; background: linear-gradient(180deg, #168ed8, #0871bc); border-color: #c5f1ff; overflow: visible; }
+.resource-fill { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: linear-gradient(180deg, #69d7ff, #1aa7ef); opacity: .9; pointer-events: none; }
+.resource-art { position: absolute; left: -9px; top: 50%; transform: translateY(-50%); width: 58px !important; height: 58px !important; z-index: 2; filter: drop-shadow(0 3px 2px rgba(0, 0, 0, .3)); }
+.resource-value { position: relative; z-index: 1; flex: 1; min-width: 64px; height: 100%; padding: 0; border: 0; background: none; color: #fff; font-size: 25px; font-weight: 900; line-height: 1; text-align: center; white-space: nowrap; text-shadow: 0 2px 0 #1c160e, 1px 0 0 #1c160e, -1px 0 0 #1c160e; font-variant-numeric: tabular-nums; }
+.resource-energy .resource-value { font-size: 24px; }
+.resource-plus { position: absolute; z-index: 3; right: -8px; bottom: -10px; width: 28px; height: 28px; display: grid; place-items: center; padding: 0; border-radius: 7px; border: 2px solid #fff; background: linear-gradient(180deg, #b7f36d, #55b82e); color: #fff; box-shadow: 0 2px 0 #2e7d1d; }
+.resource-plus:active { transform: translateY(2px); box-shadow: none; }
+.map-settings { width: 60px; height: 60px; display: grid; place-items: center; flex: 0 0 auto; margin-left: auto; padding: 0; border-radius: 18px; border: 3px solid #fff; background: radial-gradient(circle at 35% 28%, #75d2ff, #1689df 72%); color: #fff; box-shadow: 0 4px 0 #0d5e9e, 0 7px 14px rgba(0, 0, 0, .25); transition: transform .15s; }
+.map-settings:hover { transform: translateY(-2px); }
+.map-settings:active { transform: translateY(2px); }
+
+/* Круглые кнопки по бокам: прокручиваются по вертикали и не наезжают на нижнюю панель */
+.map-side-rail { position: absolute; z-index: 6; top: max(154px, calc(138px + env(safe-area-inset-top))); max-height: calc(100dvh - 288px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 16px; width: 92px; padding: 8px 10px 18px; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; touch-action: pan-y; overscroll-behavior-y: contain; }
+.map-side-rail::-webkit-scrollbar { display: none; }
+.map-side-rail[data-scroll-bottom="1"] { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent); }
+.map-side-rail[data-scroll-top="1"] { -webkit-mask-image: linear-gradient(180deg, transparent, #000 18px); mask-image: linear-gradient(180deg, transparent, #000 18px); }
+.map-side-rail[data-scroll-top="1"][data-scroll-bottom="1"] { -webkit-mask-image: linear-gradient(180deg, transparent, #000 18px, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(180deg, transparent, #000 18px, #000 calc(100% - 22px), transparent); }
+.map-rail-left { left: 16px; }
+.map-rail-right { right: 16px; }
+.map-round-wrap { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.map-round-button { position: relative; flex: 0 0 auto; width: 72px; height: 72px; display: grid; place-items: center; padding: 4px; border-radius: 50%; border: 4px solid #fff; background: radial-gradient(circle at 35% 28%, #fffef4, #fff3cf 70%, #ead7a7); box-shadow: 0 0 0 2px rgba(184, 138, 62, .68), 0 5px 0 rgba(126, 87, 35, .55), 0 8px 14px rgba(0, 0, 0, .22); touch-action: pan-y; transition: transform .15s, box-shadow .15s; }
+.map-round-button .farm-art { width: 58px !important; height: 58px !important; }
+.map-round-button:hover { transform: translateY(-2px) scale(1.04); }
+.map-round-button:active { transform: translateY(2px); box-shadow: 0 0 0 2px rgba(184, 138, 62, .68), 0 2px 0 rgba(126, 87, 35, .55); }
+.round-badge { position: absolute; right: -5px; top: -5px; min-width: 26px; height: 26px; padding: 0 4px; display: grid; place-items: center; border-radius: 50%; border: 2px solid #fff; background: radial-gradient(circle at 35% 30%, #ff8d7a, #e2402b 72%); color: #fff; font-size: 14px; font-weight: 900; font-style: normal; line-height: 1; box-shadow: 0 2px 0 #a52a18; }
+.round-badge-done { background: radial-gradient(circle at 35% 30%, #9be36a, #43a72b 72%); box-shadow: 0 2px 0 #2e7d1d; }
+.map-round-timer { padding: 2px 7px; border-radius: 8px; border: 2px solid #fff; background: rgba(38, 31, 20, .9); color: #fff; font-size: 13px; font-weight: 900; line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap; box-shadow: 0 2px 0 rgba(0, 0, 0, .3); }
+.map-tooltip { position: absolute; z-index: 9; transform: translateY(-50%); padding: 6px 10px; border-radius: 9px; background: rgba(48, 35, 18, .92); color: #fff; font-size: 12px; font-weight: 800; white-space: nowrap; pointer-events: none; box-shadow: 0 3px 10px rgba(0, 0, 0, .25); }
+.map-tooltip-left { left: 112px; }
+.map-tooltip-right { right: 112px; }
+
+/* Интерактивные объекты на фоне */
+.map-hotspots { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.farm-map-redesign .map-pin { position: absolute; left: var(--pin-x); top: var(--pin-y); transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; padding: 0; border: 0; background: none; pointer-events: auto; z-index: 1; }
+.farm-map-redesign .map-pin:hover, .farm-map-redesign .map-pin:focus-visible { z-index: 4; }
+.farm-map-redesign .map-pin-icon { position: relative; width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 3px solid rgba(255, 255, 255, .96) !important; background: radial-gradient(circle at 35% 28%, rgba(255, 254, 242, .96), rgba(246, 229, 184, .94)); box-shadow: 0 3px 0 rgba(126, 87, 35, .5), 0 5px 12px rgba(0, 0, 0, .22) !important; animation: none !important; transition: transform .15s; }
+.farm-map-redesign .map-pin-icon::before { content: none !important; animation: none !important; }
+.farm-map-redesign .map-pin-icon::after { content: none; }
+.farm-map-redesign .map-pin-icon .farm-art { width: 36px !important; height: 36px !important; }
+.farm-map-redesign .map-pin-icon > svg { width: 30px !important; height: 30px !important; color: #7a5a28; filter: none; }
+.farm-map-redesign .map-pin:not(.is-featured) .map-pin-icon { width: 42px; height: 42px; }
+.farm-map-redesign .map-pin:hover .map-pin-icon { transform: scale(1.08); }
+.farm-map-redesign .map-pin.is-ready .map-pin-icon { width: 66px; height: 66px; background: #fffdf0; animation: map-bubble 3s ease-in-out infinite !important; }
+.farm-map-redesign .map-pin.is-ready .map-pin-icon::after { content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 14px solid #fffdf0; }
+.farm-map-redesign .map-pin.is-ready .map-pin-icon .farm-art { width: 48px !important; height: 48px !important; }
+.farm-map-redesign .map-pin.is-ready .map-pin-icon > svg { width: 42px !important; height: 42px !important; }
+.farm-map-redesign .map-pin-icon em { position: absolute; right: -5px; top: -5px; z-index: 2; min-width: 24px; height: 24px; padding: 0 5px; display: grid; place-items: center; border-radius: 50%; border: 2px solid #fff; background: #e2402b; color: #fff; font-size: 12px; font-weight: 900; font-style: normal; }
+.farm-map-redesign .map-pin-label { margin-top: 8px; padding: 3px 9px; border-radius: 9px; border: 2px solid rgba(255, 255, 255, .92); background: rgba(48, 35, 18, .86); color: #fff; font-size: 11px; font-weight: 800; white-space: nowrap; opacity: 0; transform: translateY(-3px); transition: opacity .15s, transform .15s; }
+.farm-map-redesign .map-pin:hover .map-pin-label, .farm-map-redesign .map-pin:focus-visible .map-pin-label, .farm-map-redesign .map-pin.is-ready .map-pin-label { opacity: 1; transform: none; }
+.farm-map-redesign .map-pin-timer { margin-top: 3px; padding: 2px 7px; display: inline-flex; align-items: center; gap: 3px; border-radius: 8px; background: #fff; color: #7a4a10; font-size: 10px; font-weight: 800; white-space: nowrap; box-shadow: 0 2px 0 rgba(0, 0, 0, .2); }
+@keyframes map-bubble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+/* Нижняя панель быстрых действий: на узких экранах прокручивается пальцем */
+.map-dock { position: absolute; z-index: 8; left: 0; right: 0; bottom: 0; padding: 18px 20px calc(16px + env(safe-area-inset-bottom)); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; background: linear-gradient(180deg, transparent, rgba(44, 83, 20, .2) 30%, rgba(38, 70, 18, .38)); }
+.map-dock::-webkit-scrollbar { display: none; }
+.map-dock-track { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; width: 100%; max-width: 1120px; margin: 0 auto; }
+.map-dock-button { position: relative; flex: 0 0 82px; width: 82px; height: 88px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 4px 3px 6px; border-radius: 20px; border: 3px solid #fff; background: linear-gradient(180deg, #fffef2, #ffefc7); box-shadow: 0 0 0 2px rgba(151, 105, 45, .58), 0 5px 0 rgba(104, 70, 28, .68), 0 8px 14px rgba(0, 0, 0, .24); scroll-snap-align: center; transition: transform .15s; }
+.map-dock-button .farm-art { width: 62px !important; height: 62px !important; margin-top: -4px; }
+.map-dock-button:hover { transform: translateY(-4px); }
+.map-dock-button:active { transform: translateY(2px); }
+.dock-label { margin-top: auto; color: #76501f; font-size: 10px; font-weight: 900; line-height: 1; white-space: nowrap; }
+.dock-badge { position: absolute; right: -5px; top: -6px; min-width: 24px; height: 24px; padding: 0 4px; display: grid; place-items: center; border-radius: 50%; border: 2px solid #fff; background: radial-gradient(circle at 35% 30%, #ff8d7a, #e2402b 72%); color: #fff; font-size: 12px; font-weight: 900; line-height: 1; box-shadow: 0 2px 0 #a52a18; }
+.dock-free { position: absolute; left: 50%; bottom: -9px; transform: translateX(-50%); padding: 2px 10px; border-radius: 8px; border: 2px solid #fff; background: linear-gradient(180deg, #8edb4e, #45a823); color: #fff; font-size: 11px; font-weight: 900; line-height: 1.1; box-shadow: 0 2px 0 #2e7d1d; }
+
+.map-bonuses { position: absolute; z-index: 5; left: 50%; bottom: 136px; transform: translateX(-50%); max-width: calc(100% - 240px); }
+.map-bonuses .hud-bonus { position: static; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.map-bonuses .bonus-chip { font-size: 10px; padding: 3px 8px; }
+.farm-map-redesign .map-banner { position: absolute; z-index: 5; top: 120px; left: 50%; transform: translateX(-50%); max-width: 42%; padding: 6px 12px; border-radius: 12px; border: 2px solid #fff; background: rgba(255, 245, 200, .96); color: #7a5a17; font-size: 12px; font-weight: 800; text-align: center; box-shadow: 0 3px 0 rgba(170, 130, 60, .4); }
+
+.map-player:focus-visible, .map-settings:focus-visible, .map-round-button:focus-visible, .map-dock-button:focus-visible, .farm-map-redesign .map-pin:focus-visible, .resource-value:focus-visible, .resource-plus:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+/* Внутренние разделы тоже используют ширину ПК, а не узкую телефонную колонку. */
+.game-shell:not(.on-map) { width: 100%; max-width: none; }
+.game-shell:not(.on-map) .module-content { width: 100%; max-width: 1180px; margin: 0 auto; }
+.top-hud .th-row, .top-hud .th-title { max-width: 1132px; margin-left: auto; margin-right: auto; }
+.avatar-photo { border-radius: 35%; }
+
+@media (min-width: 701px) {
+  .drawer-backdrop { justify-content: flex-end; align-items: stretch; }
+  .module-drawer { width: 440px; max-width: 90vw; max-height: 100dvh; padding: 24px; border-radius: 24px 0 0 24px; animation: drawer-slide .2s ease-out; }
+  .bottom-bar { max-width: 640px; bottom: 18px; border-radius: 22px; border: 3px solid #f3cf8c; }
+}
+@keyframes drawer-slide { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (min-width: 900px) {
+  .game-shell:not(.on-map) .module-content { padding: 24px 24px 132px; }
+  .plot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .inventory-grid, .shop-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .water-grid, .pen-list, .job-cards, .promo-list, .coop-list, .worker-list, .recipe-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mine-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .content-profile .module-stack, .content-season .module-stack { max-width: 900px; margin-left: auto; margin-right: auto; }
+}
+@media (min-width: 1200px) {
+  .plot-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .inventory-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+  .map-top-hud { left: 16px; right: 16px; }
+  .map-player { width: 92px; height: 92px; }
+  .map-resources { gap: 14px; }
+  .map-resource { min-width: 132px; }
+  .resource-energy { min-width: 172px; }
+  .map-settings { width: 54px; height: 54px; }
+  .map-side-rail { top: calc(132px + env(safe-area-inset-top)); max-height: calc(100dvh - 266px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); width: 88px; padding: 8px 8px 16px; }
+  .map-rail-left { left: 10px; }
+  .map-rail-right { right: 10px; }
+  .map-tooltip-left { left: 102px; }
+  .map-tooltip-right { right: 102px; }
+  .map-dock-button { flex-basis: 74px; width: 74px; height: 82px; }
+  .map-dock-button .farm-art { width: 56px !important; height: 56px !important; }
+}
+
+@media (max-width: 700px) {
+  .farm-map-redesign { min-height: 560px; }
+  .farm-map-redesign .farm-map-bg { background-image: var(--map-image, url("/images/farm-3d.jpg")); }
+  .map-top-hud { top: max(10px, env(safe-area-inset-top)); left: 10px; right: 10px; height: 76px; }
+  .map-player { width: 72px; height: 72px; }
+  .map-player-ring { padding: 4px; border-width: 3px; }
+  .map-player-level { min-width: 28px; height: 28px; font-size: 15px; border-width: 2px; }
+  .map-player-name { display: none; }
+  .map-resources { left: 88px; right: 62px; top: 6px; transform: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .map-resource { min-width: 0; height: 32px; padding: 0 6px 0 22px; border-width: 2px; }
+  .resource-energy { min-width: 0; }
+  .resource-art { left: -5px; width: 32px !important; height: 32px !important; }
+  .resource-value { min-width: 0; font-size: 13px; }
+  .resource-energy .resource-value { font-size: 12px; }
+  .resource-plus { right: -3px; bottom: -7px; width: 20px; height: 20px; border-radius: 5px; }
+  .resource-plus svg { width: 12px; height: 12px; }
+  .map-settings { width: 44px; height: 44px; border-radius: 14px; }
+  .map-settings svg { width: 24px; height: 24px; }
+  .map-side-rail { top: calc(102px + env(safe-area-inset-top)); max-height: calc(100dvh - 222px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); width: 72px; padding: 6px 4px 14px; gap: 12px; }
+  .map-rail-left { left: 4px; }
+  .map-rail-right { right: 4px; }
+  .map-round-button { width: 52px; height: 52px; border-width: 3px; padding: 2px; }
+  .map-round-button .farm-art { width: 42px !important; height: 42px !important; }
+  .round-badge { min-width: 20px; height: 20px; right: -4px; top: -4px; font-size: 11px; }
+  .round-badge svg { width: 12px; height: 12px; }
+  .map-round-wrap { gap: 4px; }
+  .map-round-timer { padding: 2px 4px; font-size: 10px; border-width: 1px; }
+  .map-tooltip { display: none; }
+  .farm-map-redesign .map-pin { left: var(--pin-mx); top: var(--pin-my); }
+  .farm-map-redesign .map-pin-icon { width: 40px; height: 40px; border-width: 2px !important; }
+  .farm-map-redesign .map-pin-icon .farm-art { width: 30px !important; height: 30px !important; }
+  .farm-map-redesign .map-pin-icon > svg { width: 25px !important; height: 25px !important; }
+  .farm-map-redesign .map-pin:not(.is-featured) .map-pin-icon { width: 36px; height: 36px; }
+  .farm-map-redesign .map-pin.is-ready .map-pin-icon { width: 56px; height: 56px; }
+  .farm-map-redesign .map-pin.is-ready .map-pin-icon .farm-art { width: 42px !important; height: 42px !important; }
+  .farm-map-redesign .map-pin.is-ready .map-pin-icon > svg { width: 35px !important; height: 35px !important; }
+  .farm-map-redesign .map-pin-label { margin-top: 6px; padding: 2px 6px; font-size: 9px; }
+  .farm-map-redesign .map-pin-timer { font-size: 9px; }
+  .map-dock { padding: 12px 12px calc(13px + env(safe-area-inset-bottom)); }
+  .map-dock-track { gap: 9px; width: max-content; max-width: none; justify-content: flex-start; margin: 0; }
+  .map-dock-button { flex-basis: 66px; width: 66px; height: 74px; padding: 3px 2px 5px; border-radius: 17px; border-width: 2px; }
+  .map-dock-button .farm-art { width: 52px !important; height: 52px !important; margin-top: -3px; }
+  .dock-label { font-size: 9px; }
+  .dock-badge { min-width: 20px; height: 20px; font-size: 10px; }
+  .dock-free { bottom: -7px; padding: 2px 8px; font-size: 10px; }
+  .map-bonuses { bottom: calc(120px + env(safe-area-inset-bottom)); max-width: calc(100% - 156px); }
+  .farm-map-redesign .map-banner { bottom: calc(118px + env(safe-area-inset-bottom)); max-width: calc(100% - 160px); padding: 4px 8px; font-size: 10px; }
+  .module-drawer { max-height: 88dvh; border-radius: 24px 24px 0 0; }
+}
+
+@media (max-width: 380px) {
+  .map-player { width: 64px; height: 64px; }
+  .map-resources { left: 78px; right: 56px; gap: 6px; }
+  .map-resource { height: 30px; padding-left: 20px; }
+  .resource-art { width: 28px !important; height: 28px !important; }
+  .resource-value, .resource-energy .resource-value { font-size: 11px; }
+  .map-settings { width: 40px; height: 40px; }
+  .map-side-rail { top: calc(92px + env(safe-area-inset-top)); max-height: calc(100dvh - 212px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); width: 68px; gap: 10px; }
+  .map-round-button { width: 48px; height: 48px; }
+  .map-round-button .farm-art { width: 38px !important; height: 38px !important; }
+  .map-dock-button { flex-basis: 60px; width: 60px; height: 68px; }
+  .map-dock-button .farm-art { width: 46px !important; height: 46px !important; }
+}
+
+@media (max-height: 650px) and (min-width: 701px) {
+  .farm-map-redesign { min-height: 520px; }
+  .map-top-hud { top: 10px; }
+  .map-player { width: 84px; height: 84px; }
+  .map-resource { height: 42px; }
+  .resource-art { width: 48px !important; height: 48px !important; }
+  .map-settings { width: 52px; height: 52px; }
+  .map-side-rail { top: 108px; max-height: calc(100dvh - 240px - env(safe-area-inset-bottom)); gap: 10px; }
+  .map-round-button { width: 58px; height: 58px; }
+  .map-round-button .farm-art { width: 46px !important; height: 46px !important; }
+  .map-round-timer { font-size: 11px; }
+  .map-dock-button { flex-basis: 70px; width: 70px; height: 76px; }
+  .map-dock-button .farm-art { width: 52px !important; height: 52px !important; }
+  .map-bonuses { bottom: 108px; }
+  .farm-map-redesign .map-banner { top: 100px; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .farm-map-redesign { min-height: 100dvh; }
+  .map-top-hud { top: 8px; left: 10px; right: 10px; height: 60px; }
+  .map-player { width: 56px; height: 56px; }
+  .map-player-level { min-width: 24px; height: 24px; font-size: 13px; }
+  .map-resources { top: 2px; gap: 12px; }
+  .map-resource { height: 30px; min-width: 110px; padding-left: 36px; }
+  .resource-energy { min-width: 140px; }
+  .resource-art { width: 34px !important; height: 34px !important; }
+  .resource-value, .resource-energy .resource-value { font-size: 14px; }
+  .resource-plus { width: 20px; height: 20px; bottom: -6px; }
+  .map-settings { width: 40px; height: 40px; border-radius: 12px; }
+  .map-settings svg { width: 22px; height: 22px; }
+  .map-side-rail { top: calc(76px + env(safe-area-inset-top)); max-height: calc(100dvh - 190px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap: 8px; width: 60px; padding: 5px 4px 12px; }
+  .map-rail-left { left: 4px; }
+  .map-rail-right { right: 4px; }
+  .map-round-button { width: 44px; height: 44px; border-width: 2px; }
+  .map-round-button .farm-art { width: 34px !important; height: 34px !important; }
+  .map-round-timer { display: none; }
+  .map-tooltip { display: none; }
+  .round-badge { min-width: 18px; height: 18px; font-size: 10px; }
+  .map-dock { padding: 8px 10px calc(9px + env(safe-area-inset-bottom)); }
+  .map-dock-button { flex-basis: 56px; width: 56px; height: 60px; border-radius: 14px; }
+  .map-dock-button .farm-art { width: 40px !important; height: 40px !important; }
+  .dock-label { font-size: 8px; }
+  .map-bonuses { bottom: 84px; }
+  .farm-map-redesign .map-banner { top: 70px; font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .farm-map-redesign *, .farm-map-redesign *::before, .farm-map-redesign *::after { animation: none !important; transition: none !important; }
+}
+
+/* ============================================================
+   Энергия: тёмная «трубка» и яркая заливка, плавно меняется
+   ============================================================ */
+.resource-energy { background: linear-gradient(180deg, #1c4770, #10304f); border-color: #bfeaff; overflow: visible; }
+.resource-fill { max-width: 100%; background: linear-gradient(180deg, #8be8ff, #22b0f2 52%, #1388d8); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .5), inset 0 -2px 0 rgba(8, 60, 110, .35); opacity: 1; transition: width .6s linear; overflow: hidden; }
+.resource-energy.is-charging .resource-fill::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .5), transparent) no-repeat; background-size: 55% 100%; animation: energy-shimmer 2.4s linear infinite; }
+@keyframes energy-shimmer { from { background-position: -90% 0; } to { background-position: 190% 0; } }
+@media (prefers-reduced-motion: reduce) { .resource-fill, .resource-fill::after { transition: none !important; animation: none !important; } }
+
+/* ============================================================
+   Внутренние разделы в стиле главной карты
+   ============================================================ */
+.game-shell.inner:not(.on-map) { position: relative; isolation: isolate; background: transparent !important; }
+.game-shell.inner::before { content: ""; position: fixed; inset: -12px; z-index: -2; background: var(--module-bg, url("/images/farm-valley-wide.jpg")) center / cover no-repeat; filter: blur(5px) saturate(1.08); }
+.game-shell.inner::after { content: ""; position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(255, 247, 214, .66), rgba(255, 241, 200, .44) 48%, rgba(70, 122, 36, .4)); }
+.game-shell.inner:not(.on-map) .module-content { max-width: 1180px; margin: 0 auto; padding: 14px 16px calc(138px + env(safe-area-inset-bottom)); }
+.game-shell.inner:not(.on-map) .toast { bottom: calc(118px + env(safe-area-inset-bottom)); }
+
+/* Шапка */
+.inner-hud { position: sticky; top: 0; z-index: 40; padding: max(6px, env(safe-area-inset-top)) 0 8px; background: linear-gradient(180deg, rgba(49, 88, 26, .78), rgba(49, 88, 26, .4) 72%, transparent); backdrop-filter: blur(3px); }
+.inner-hud-row { display: flex; align-items: center; gap: 16px; max-width: 1180px; margin: 0 auto; padding: 6px 16px 0; }
+.inner-hud .map-player { width: 78px; height: 78px; }
+.inner-hud .map-player-name { display: none; }
+.inner-hud .map-resources { position: static; transform: none; flex: 1; min-width: 0; justify-content: center; gap: 22px; top: auto; left: auto; right: auto; }
+.inner-hud .map-resource { height: 44px; }
+.inner-hud .resource-art { width: 52px !important; height: 52px !important; }
+.inner-hud .resource-value { font-size: 22px; }
+.inner-hud .map-settings { width: 54px; height: 54px; margin-left: 0; }
+.inner-title { display: flex; align-items: center; gap: 10px; max-width: 1148px; margin: 10px auto 0; padding: 6px 10px; border-radius: 20px; border: 3px solid #f3cf8c; background: linear-gradient(180deg, #a8703a, #744618); color: #fff4dc; box-shadow: 0 4px 0 #4f2f10, 0 8px 16px rgba(0, 0, 0, .25); }
+.inner-title > div { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.inner-title strong { font-size: 19px; font-weight: 900; line-height: 1.15; text-shadow: 0 2px 0 rgba(0, 0, 0, .3); }
+.inner-title small { font-size: 11px; font-weight: 700; color: #f6d9a6; }
+.inner-back, .inner-menu { flex: 0 0 auto; width: 46px; height: 46px; display: grid; place-items: center; padding: 0; border-radius: 50%; border: 3px solid #fff; color: #fff; }
+.inner-back { background: radial-gradient(circle at 35% 28%, #75d2ff, #1689df 72%); box-shadow: 0 3px 0 #0d5e9e; }
+.inner-menu { width: 40px; height: 40px; background: radial-gradient(circle at 35% 28%, #ffe27a, #e89a14 72%); color: #5c3200; box-shadow: 0 3px 0 #a8650a; }
+.inner-back:active, .inner-menu:active { transform: translateY(2px); box-shadow: none; }
+.inner-title-ico { flex: 0 0 auto; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 14px; background: rgba(255, 244, 220, .2); }
+
+/* Нижний док на внутренних страницах */
+.map-dock.is-fixed { position: fixed; z-index: 45; background: linear-gradient(180deg, transparent, rgba(44, 83, 20, .5) 40%, rgba(38, 70, 18, .72)); }
+.map-dock-button.is-current { transform: translateY(-6px); background: linear-gradient(180deg, #fffbd6, #ffe28a); box-shadow: 0 0 0 3px #f2b21f, 0 5px 0 rgba(104, 70, 28, .68), 0 10px 16px rgba(0, 0, 0, .3); }
+.map-dock-button.is-current .dock-label { color: #8a5200; }
+
+/* Карточки и панели — в том же глянцевом стиле, что и круглые кнопки */
+.game-shell.inner .panel, .game-shell.inner .water-card, .game-shell.inner .pen-card, .game-shell.inner .mine-card,
+.game-shell.inner .job-card, .game-shell.inner .news-card, .game-shell.inner .shop-card, .game-shell.inner .order-card,
+.game-shell.inner .upgrade-row, .game-shell.inner .market-listing, .game-shell.inner .inventory-card, .game-shell.inner .topic-row,
+.game-shell.inner .topic-detail, .game-shell.inner .mail-card, .game-shell.inner .friend-list article, .game-shell.inner .ticket-list article,
+.game-shell.inner .blessing-card, .game-shell.inner .promo-card, .game-shell.inner .coop-card, .game-shell.inner .worker-card,
+.game-shell.inner .rating-row, .game-shell.inner .season-cell, .game-shell.inner .recipe-row, .game-shell.inner .profile-facts,
+.game-shell.inner .coop-members article {
+  background: linear-gradient(180deg, #fffef6, #fff1cf) !important;
+  border: 3px solid #fff !important;
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px rgba(184, 138, 62, .62), 0 5px 0 rgba(126, 87, 35, .45), 0 10px 18px rgba(0, 0, 0, .16) !important;
+}
+.game-shell.inner .module-stack { gap: 14px; }
+.game-shell.inner .module-stack > .muted, .game-shell.inner .module-stack > .form-hint { color: #fff8e0; text-shadow: 0 1px 3px rgba(40, 30, 10, .7); }
+.game-shell.inner .section-heading h2, .game-shell.inner .section-heading .eyebrow { color: #fff8e0; text-shadow: 0 2px 4px rgba(40, 30, 10, .6); }
+.game-shell.inner .btn { border-radius: 16px; }
+
+/* Раздел «Водоёмы» */
+.water-hub { display: flex; flex-direction: column; gap: 14px; }
+.water-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.water-tab { position: relative; display: flex; align-items: center; gap: 10px; min-width: 0; padding: 8px 14px; border-radius: 22px; border: 3px solid #fff; background: linear-gradient(180deg, #fffef6, #ffeec2); color: #6b4518; text-align: left; box-shadow: 0 0 0 2px rgba(184, 138, 62, .62), 0 5px 0 rgba(126, 87, 35, .5), 0 8px 14px rgba(0, 0, 0, .18); transition: transform .15s; }
+.water-tab:hover { transform: translateY(-2px); }
+.water-tab:active { transform: translateY(2px); }
+.water-tab .farm-art { width: 48px !important; height: 48px !important; }
+.water-tab strong { display: block; font-size: 16px; font-weight: 900; line-height: 1.15; }
+.water-tab small { display: block; font-size: 11px; font-weight: 700; color: #9a6a2a; }
+.water-tab.active { color: #fff; background: linear-gradient(180deg, #7fd9ff, #2a96e4); box-shadow: 0 0 0 2px #fff, 0 0 0 5px #1b6fb9, 0 5px 0 #0f4f89, 0 10px 16px rgba(0, 0, 0, .25); text-shadow: 0 2px 0 rgba(10, 70, 130, .55); }
+.water-tab.active small { color: #e6f7ff; }
+.water-tab em { position: absolute; right: -5px; top: -6px; min-width: 24px; height: 24px; padding: 0 5px; display: grid; place-items: center; border-radius: 50%; border: 2px solid #fff; background: radial-gradient(circle at 35% 30%, #ff8d7a, #e2402b 72%); color: #fff; font-size: 12px; font-weight: 900; font-style: normal; text-shadow: none; }
+.water-hub .module-stack { animation: none; }
+
+@media (min-width: 701px) and (max-width: 1100px) {
+  .inner-hud .map-resources { gap: 14px; }
+  .inner-hud .resource-value { font-size: 19px; }
+}
+
+@media (max-width: 700px) {
+  .game-shell.inner::before { background: var(--module-bg, url("/images/farm-3d.jpg")) center / cover no-repeat; }
+  .inner-hud-row { gap: 8px; padding: 4px 10px 0; }
+  .inner-hud .map-player { width: 56px; height: 56px; }
+  .inner-hud .map-resources { gap: 7px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .inner-hud .map-resource { height: 32px; min-width: 0; padding: 0 6px 0 22px; }
+  .inner-hud .resource-art { width: 32px !important; height: 32px !important; left: -5px; }
+  .inner-hud .resource-value { font-size: 13px; min-width: 0; }
+  .inner-hud .map-settings { width: 42px; height: 42px; border-radius: 14px; }
+  .inner-hud .map-settings svg { width: 22px; height: 22px; }
+  .inner-title { margin: 8px 8px 0; padding: 5px 8px; gap: 8px; border-radius: 16px; }
+  .inner-title strong { font-size: 16px; }
+  .inner-back { width: 40px; height: 40px; }
+  .inner-menu { width: 36px; height: 36px; }
+  .inner-title-ico { width: 34px; height: 34px; }
+  .game-shell.inner:not(.on-map) .module-content { padding: 10px 10px calc(112px + env(safe-area-inset-bottom)); }
+  .game-shell.inner:not(.on-map) .toast { bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .water-tabs { gap: 7px; }
+  .water-tab { flex-direction: column; justify-content: center; gap: 2px; padding: 8px 4px; text-align: center; border-radius: 18px; }
+  .water-tab .farm-art { width: 38px !important; height: 38px !important; }
+  .water-tab strong { font-size: 13px; }
+  .water-tab small { display: none; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .inner-hud .map-player { width: 46px; height: 46px; }
+  .inner-hud .map-resource { height: 28px; }
+  .inner-hud .resource-art { width: 30px !important; height: 30px !important; }
+  .inner-hud .resource-value { font-size: 13px; }
+  .inner-title { margin-top: 4px; padding: 3px 8px; }
+  .inner-title small { display: none; }
+  .game-shell.inner:not(.on-map) .module-content { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+}
+
+/* «Free» над иконкой, чтобы не закрывать подпись */
+.dock-free { bottom: auto; top: -10px; }
+
+/* Чат и пустые состояния — карточки в общем стиле */
+.game-shell.inner:not(.on-map) .chat-module { height: calc(100dvh - 330px); min-height: 400px; margin: 0; border-radius: 22px; border: 3px solid #fff; background: linear-gradient(180deg, #fffef6, #fff1cf); box-shadow: 0 0 0 2px rgba(184, 138, 62, .62), 0 5px 0 rgba(126, 87, 35, .45), 0 10px 18px rgba(0, 0, 0, .16); overflow: hidden; }
+.game-shell.inner .chat-module .chat-presence { padding: 10px 16px; background: rgba(255, 238, 194, .75); border-bottom: 2px dashed #f0dba8; }
+.game-shell.inner .chat-module .chat-messages { flex: 1; min-height: 0; overflow-y: auto; padding: 8px 14px; }
+.game-shell.inner .chat-module .chat-composer { padding: 10px 12px 12px; background: rgba(255, 238, 194, .6); border-top: 2px dashed #f0dba8; }
+.game-shell.inner .module-stack > .empty-state, .game-shell.inner .module-stack > .panel > .empty-state { color: #7a5a2c; }
+.game-shell.inner .module-stack > .empty-state { border-radius: 22px; border: 3px solid #fff; background: linear-gradient(180deg, #fffef6, #fff1cf); box-shadow: 0 0 0 2px rgba(184, 138, 62, .62), 0 5px 0 rgba(126, 87, 35, .45), 0 10px 18px rgba(0, 0, 0, .16); }
+@media (max-width: 700px) { .game-shell.inner:not(.on-map) .chat-module { height: calc(100dvh - 285px); min-height: 340px; } }
+
+/* Полоса бонусов — без плоской ленты, по ширине контента */
+.game-shell.inner .bonus-strip { max-width: 1180px; margin: 4px auto 0; padding: 4px 16px; background: none; border: 0; }
+.game-shell.inner:not(.on-map) .chat-module { height: calc(100dvh - 385px); }
+@media (max-width: 700px) {
+  .game-shell.inner .bonus-strip { padding: 4px 10px; }
+  .game-shell.inner:not(.on-map) .chat-module { height: calc(100dvh - 340px); min-height: 320px; }
+}
+
+/* ============================================================
+   Колесо фортуны
+   ============================================================ */
+.wheel-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(260px, 420px) 1fr; gap: 28px; align-items: center; padding: 24px; border-radius: 26px; border: 3px solid #fff; background: linear-gradient(135deg, rgba(255,252,238,.92), rgba(255,232,175,.88)), url("/images/wheel/backdrop.jpg") center / cover no-repeat; box-shadow: 0 0 0 2px rgba(184, 138, 62, .62), 0 6px 0 rgba(126, 87, 35, .5), 0 12px 22px rgba(0, 0, 0, .2); }
+.wheel-stage { position: relative; width: 100%; max-width: 420px; aspect-ratio: 1; margin: 0 auto; filter: drop-shadow(0 10px 14px rgba(60, 35, 10, .35)); }
+.wheel-svg { width: 100%; height: 100%; display: block; will-change: transform; }
+.wheel-pointer { position: absolute; z-index: 2; left: 50%; top: -8px; width: 34px; height: 44px; transform: translateX(-50%); background: linear-gradient(180deg, #ff6a4d, #c9301b); clip-path: polygon(50% 100%, 0 0, 100% 0); filter: drop-shadow(0 3px 0 rgba(90, 20, 10, .6)); }
+.wheel-side { display: flex; flex-direction: column; gap: 12px; }
+.wheel-side h2 { font-size: 28px; font-weight: 900; color: #6b4518; }
+.wheel-side p { color: #7a5a2c; font-size: 14px; line-height: 1.5; }
+.wheel-result { min-height: 54px; display: grid; place-items: center; padding: 10px 14px; border-radius: 16px; border: 3px dashed #e8c986; background: rgba(255, 255, 255, .6); color: #8a6a3a; font-weight: 800; text-align: center; }
+.wheel-result.show { border-style: solid; border-color: #f2b21f; background: linear-gradient(180deg, #fff9d6, #ffe88a); color: #6b4518; font-size: 18px; animation: wheel-pop .5s ease-out; }
+.wheel-result strong { font-size: 24px; }
+@keyframes wheel-pop { from { transform: scale(.85); opacity: .4; } to { transform: none; opacity: 1; } }
+.wheel-button { background: linear-gradient(180deg, #ffe27a, #f0a01a) !important; color: #5c3200 !important; border: 3px solid #fff !important; font-size: 18px; box-shadow: 0 5px 0 #a8650a !important; }
+.wheel-prizes h3 { margin-bottom: 10px; color: #6b4518; }
+.wheel-prize-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.wheel-prize-grid span { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px; border-radius: 14px; border: 3px solid; background: #fffdf2; font-size: 12px; font-weight: 800; color: #5b4a2c; text-align: center; }
+.wheel-prize-grid b { font-size: 24px; }
+.wheel-prize-grid small { color: #9a8560; font-weight: 700; }
+@media (max-width: 760px) {
+  .wheel-hero { grid-template-columns: 1fr; padding: 14px; gap: 14px; }
+  .wheel-side h2 { font-size: 22px; }
+  .wheel-prize-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .wheel-svg { transition-duration: .01s !important; } .wheel-result.show { animation: none; } }
+
+/* ============================================================
+   Растения против зомби
+   ============================================================ */
+.pvz-hero { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 24px; border: 3px solid #fff; background: linear-gradient(135deg, #5fb43d, #2f7e2a); color: #fff; box-shadow: 0 0 0 2px #1f5a1c, 0 6px 0 rgba(20, 70, 20, .6), 0 12px 20px rgba(0, 0, 0, .22); }
+.pvz-hero > span { font-size: 54px; line-height: 1; filter: drop-shadow(0 3px 2px rgba(0, 0, 0, .3)); }
+.pvz-hero h2 { font-size: 24px; font-weight: 900; text-shadow: 0 2px 0 rgba(0, 0, 0, .3); }
+.pvz-hero p { font-size: 13px; opacity: .94; line-height: 1.45; margin-top: 4px; }
+.pvz-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.pvz-stats > div { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px; border-radius: 14px; background: #fffdf2; border: 2px solid #f3dcaf; text-align: center; }
+.pvz-stats strong { font-size: 22px; font-weight: 900; color: #4a2f12; }
+.pvz-stats span { font-size: 10px; font-weight: 700; color: #8a6a42; }
+.pvz-result { display: flex; flex-direction: column; gap: 3px; margin: 12px 0; padding: 12px 14px; border-radius: 16px; background: #ffe3da; border: 2px solid #f6c4b4; color: #8a2f1c; }
+.pvz-result.win { background: #e3f7d0; border-color: #a8d98a; color: #2f6a1c; }
+.pvz-guide { list-style: none; margin: 12px 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.pvz-guide li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 14px; background: #fff8e4; border: 2px solid #f3dcaf; font-size: 12px; }
+.pvz-guide b { font-size: 28px; }
+.pvz-guide small { display: block; color: #8a6a42; }
+.pvz-board { display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: 24px; border: 3px solid #fff; background: linear-gradient(180deg, #7a4f26, #5a3a1a); box-shadow: 0 0 0 2px #3b2410, 0 6px 0 rgba(40, 25, 10, .6), 0 12px 22px rgba(0, 0, 0, .25); }
+.pvz-bar { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 900; }
+.pvz-sun { padding: 4px 14px; border-radius: 999px; background: rgba(0, 0, 0, .35); font-size: 20px; }
+.pvz-sun strong { font-size: 22px; font-variant-numeric: tabular-nums; }
+.pvz-wave { flex: 1; text-align: center; font-size: 15px; text-shadow: 0 2px 0 rgba(0, 0, 0, .4); }
+.pvz-pause { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 3px solid #fff; background: radial-gradient(circle at 35% 28%, #75d2ff, #1689df 72%); color: #fff; }
+.pvz-cards { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+.pvz-card { position: relative; flex: 0 0 auto; width: 68px; height: 78px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 14px; border: 3px solid #fff6dc; background: linear-gradient(180deg, #fffdf4, #f1dba8); color: #5a3a1a; overflow: hidden; box-shadow: 0 4px 0 rgba(0, 0, 0, .35); }
+.pvz-card b { font-size: 34px; line-height: 1; }
+.pvz-card small { font-size: 12px; font-weight: 900; }
+.pvz-card.active { border-color: #ffd34e; box-shadow: 0 0 0 3px #f2b21f, 0 4px 0 rgba(0, 0, 0, .35); transform: translateY(-3px); }
+.pvz-card.dim { filter: saturate(.55) brightness(.9); }
+.pvz-card i { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(20, 20, 30, .55); pointer-events: none; }
+.pvz-card.shovel b { display: grid; place-items: center; height: 34px; }
+.pvz-canvas { width: min(100%, max(520px, calc((100dvh - 480px) * 1.898))); height: auto; display: block; margin: 0 auto; border-radius: 14px; border: 3px solid #2f6a1c; background: #7fcb54; touch-action: manipulation; cursor: pointer; }
+.pvz-hint { text-align: center; color: #ffe9b8; font-size: 12px; font-weight: 700; }
+@media (max-width: 700px) {
+  .pvz-canvas { width: 100%; }
+  .pvz-hero { padding: 12px; gap: 10px; } .pvz-hero > span { font-size: 38px; } .pvz-hero h2 { font-size: 18px; } .pvz-hero p { font-size: 12px; }
+  .pvz-stats, .pvz-guide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pvz-board { padding: 8px; border-radius: 18px; }
+  .pvz-card { width: 58px; height: 66px; } .pvz-card b { font-size: 28px; }
+}
+
+/* Алмазная витрина */
+.shop-card.gem-card { background: linear-gradient(180deg, #f2fcff, #d8f1ff) !important; }
+.game-shell.inner .shop-card.gem-card { box-shadow: 0 0 0 2px rgba(60, 160, 220, .7), 0 5px 0 rgba(30, 100, 160, .5), 0 10px 18px rgba(0, 0, 0, .16) !important; }
+
+/* В доке много пунктов: центрируем, а при нехватке места листаем */
+.map-dock-track { width: max-content; max-width: none; margin: 0 auto; justify-content: center; }
+@media (max-width: 700px) { .map-dock-track { margin: 0; justify-content: flex-start; } }
+
+.wheel-halo { position: absolute; inset: -14px; border-radius: 50%; background: radial-gradient(circle, rgba(255,224,102,.65) 0%, rgba(255,180,41,.22) 55%, transparent 72%); pointer-events: none; z-index: 0; animation: wheel-glow 3s ease-in-out infinite alternate; }
+.wheel-stage .wheel-svg { position: relative; z-index: 1; }
+.wheel-pointer.is-ticking { animation: pointer-tick .16s ease-in-out infinite alternate; transform-origin: 50% 10%; }
+@keyframes wheel-glow { from { transform: scale(.96); opacity: .75; } to { transform: scale(1.04); opacity: 1; } }
+@keyframes pointer-tick { from { transform: translateX(-50%) rotate(-9deg); } to { transform: translateX(-50%) rotate(9deg); } }
