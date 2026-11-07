@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const base=process.env.TEST_URL??'http://127.0.0.1:3000',tag=process.env.TEST_TAG??'next';
+const reg=await fetch(base+'/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:'lw_'+Date.now().toString(36),password:'test-password-123',displayName:'Линии'})});
+const token=reg.headers.get('set-cookie').split(';')[0].split('=')[1];
+const b=await chromium.launch({headless:true,args:['--no-sandbox']});const ctx=await b.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+await ctx.addCookies([{name:'quiet_farm_session',value:token,domain:new URL(base).hostname,path:'/',httpOnly:true,sameSite:'Lax'}]);await ctx.addInitScript(()=>sessionStorage.setItem('valley:splash','1'));
+const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));
+await p.goto(base,{waitUntil:'networkidle'});await p.locator('.map-dock-button[aria-label="Зомби"]').click();await p.getByRole('button',{name:/Начать защиту/}).click();await p.waitForSelector('.defense-canvas');
+await p.waitForSelector('.defense-threat-banner',{timeout:30000});await p.waitForTimeout(600);
+const banner=await p.locator('.defense-threat-banner').innerText();await p.screenshot({path:`.checks/${tag}-lane-warning.png`});
+console.log('lane warning shown:',banner,'errors:',errors.length);await b.close();
